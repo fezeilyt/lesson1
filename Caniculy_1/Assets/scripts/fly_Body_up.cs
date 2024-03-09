@@ -9,6 +9,9 @@ public class fly_Body_up : MonoBehaviour
     Rigidbody rigiStarship;
     public float forceStrength = 10f;
     AudioSource audioStarship;
+    public AudioClip checkpoint;
+    public AudioClip finish;
+    public AudioClip BOOOM;
     public GameObject newStarship;
     // Start is called before the first frame update
     void Start()
@@ -41,11 +44,10 @@ public class fly_Body_up : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             rigiStarship.AddRelativeForce(Vector3.up * forceStrength);
-            if (!audioStarship.isPlaying)
+            if (audioStarship.isPlaying);
             {
                 audioStarship.Play();
             }
-
         }
         else
         {
@@ -134,5 +136,30 @@ public class fly_Body_up : MonoBehaviour
             }
         }
         print("START");
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "start":
+                print("START");
+                break;
+            case "checkpoint":
+                print("SpawnPointSet");
+                audioStarship.PlayOneShot(checkpoint);
+                break;
+            case "Finish":
+                print("END");
+                audioStarship.PlayOneShot(finish);
+                break;
+            case "BOOOOOOOM":
+                print("BABACH");
+                audioStarship.PlayOneShot(BOOOM);
+                break;
+            default:
+                print("?");
+                break;
+        }
+
     }
 }
