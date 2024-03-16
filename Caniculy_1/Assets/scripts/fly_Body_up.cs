@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.WSA;
 
 public class fly_Body_up : MonoBehaviour
 {
     Rigidbody rigiStarship;
     public float forceStrength = 10f;
-    AudioSource audioStarship;
+    public AudioSource audioStarship;
     public AudioClip checkpoint;
     public AudioClip finish;
     public AudioClip BOOOM;
@@ -16,18 +18,6 @@ public class fly_Body_up : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("ten", 1f);
-        Invoke("nine", 2f);
-        Invoke("eight", 3f);
-        Invoke("seven", 4f);
-        Invoke("six", 5f);
-        Invoke("five", 6f);
-        Invoke("four", 7f);
-        Invoke("three", 8f);
-        Invoke("two", 9f);
-        Invoke("one", 10f);
-        Invoke("start", 11f);
-
         audioStarship = GetComponent<AudioSource>();
         rigiStarship = GetComponent<Rigidbody>();
     }
@@ -44,7 +34,7 @@ public class fly_Body_up : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             rigiStarship.AddRelativeForce(Vector3.up * forceStrength);
-            if (audioStarship.isPlaying);
+            if (!audioStarship.isPlaying)
             {
                 audioStarship.Play();
             }
@@ -80,63 +70,6 @@ public class fly_Body_up : MonoBehaviour
     {
         Instantiate(newStarship, new Vector3(0, 10, 0), Quaternion.identity);
     }
-    void ten()
-    {
-        print(10);
-    }
-    void nine()
-    {
-        print(9);
-    }
-    void eight()
-    {
-        print(8);
-    }
-    void seven()
-    {
-        print(7);
-    }
-    void six()
-    {
-        print(6);
-    }
-    void five()
-    {
-        print(5);
-    }
-    void four()
-    {
-        print(4);
-    }
-    void three()
-    {
-        print(3);
-    }
-    void two()
-    {
-        print(2);
-    }
-    void one()
-    {
-        print(1);
-    }
-    void start()
-    {
-        print("START");
-    }
-
-    void Countdown()
-    {
-        for (int n = 10; n >= 1; n--)
-        {
-            print(n);
-            if (n == 0)
-            {
-                break;
-            }
-        }
-        print("START");
-    }
     private void OnCollisionEnter(Collision collision)
     {
         switch (collision.gameObject.tag)
@@ -151,15 +84,25 @@ public class fly_Body_up : MonoBehaviour
             case "Finish":
                 print("END");
                 audioStarship.PlayOneShot(finish);
+                Invoke("LoadScene2", 3f);
                 break;
             case "BOOOOOOOM":
                 print("BABACH");
                 audioStarship.PlayOneShot(BOOOM);
+                Invoke("LoadScene1", 3f);
                 break;
             default:
                 print("?");
                 break;
         }
 
+    }
+    void LoadScene1 ()
+    {
+        SceneManager.LoadScene(0);
+    }
+    void LoadScene2()
+    {
+        SceneManager.LoadScene(1);
     }
 }
