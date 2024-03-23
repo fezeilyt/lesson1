@@ -26,6 +26,7 @@ public class fly_Body_up : MonoBehaviour
     void Update()
     {
         RotationInput();
+        Invoke("LoadScene1", 2);
         Launch();
     }
     void Launch()
@@ -99,10 +100,10 @@ public class fly_Body_up : MonoBehaviour
     }
     void LoadScene1 ()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     void LoadScene2()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }
